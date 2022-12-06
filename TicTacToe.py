@@ -11,11 +11,7 @@ def drawBoard(board):
     print("+ - + - + - +")
 
 def computerGo(board):
-    choices = []
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] != 'O' and board[i][j] != 'X':
-                choices.append(board[i][j])
+    choices = checkChoices(board)
     choice = choices[randrange(len(choices))]
     return choice
 
@@ -29,12 +25,8 @@ def updateBoardData(choice,turn,board):
     return board
 
 def playerGo(board):
-    choices = []
+    choices = checkChoices(board)
     validChoice = False
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] != 'O' and board[i][j] != 'X':
-                choices.append(board[i][j])
     while validChoice!= True:
         playerInput = input("Please type your move: ")
         if  isValid(playerInput) == True:
@@ -45,61 +37,26 @@ def checkWinCondition(board):
     global winner
     for i in range(3):
         for j in range(3):
-            tile = [i,j]
             if board[i][j] == 'X':
-                if lineCheck(tile, board, 'X') == True:
+                if lineCheck(board, 'X') == True:
                     winner = 'Player'
                     return True
             elif board[i][j] == 'O':
-                if lineCheck(tile, board, 'O') == True:
+                if lineCheck(board, 'O') == True:
                     winner = 'Computer'
                     return True
     return False
 
-def lineCheck(tile, board, value):
-    row = tile[0]
-    column = tile[1]
-    if row == 0 and column == 0:
-        if board[0][1] == value and board[0][2] == value:
-            return True
-        elif board[1][0] == value and board[2][0] == value:
-            return True
-        elif board[1][1] == value and board[2][2] == value:
-            return True
-        else:
-            pass
-    else:
-        pass
-    if row == 1 and column == 0:
-        if board[1][1] == value and board[1][2] == value:
-            return True
-        else:
-            pass
-    else:
-        pass
-    if row == 2 and column == 0:
-        if board[2][1] == value and board[2][2] == value:
-            return True
-        elif board[1][1] == value and board[0][2] == value:
-            return True
-        else:
-            pass
-    else:
-        pass
-    if row == 0 and column == 1:
-        if board[1][1] == value and board[2][1] == value:
-            return True
-        else:
-            pass
-    else:
-        pass
-    if row == 0 and column == 2:
-        if board[1][2] == value and board[2][2] == value:
-            return True
-        else:
-            pass
-    else:
-        pass
+def lineCheck(board, value):
+    if board[0][0] == value and board[0][1] == value and board[0][2] == value\
+    or board[1][0] == value and board[1][1] == value and board[1][2] == value\
+    or board[2][0] == value and board[2][1] == value and board[2][2] == value\
+    or board[0][0] == value and board[1][0] == value and board[2][0] == value\
+    or board[0][1] == value and board[1][1] == value and board[2][1] == value\
+    or board[0][2] == value and board[1][2] == value and board[2][2] == value\
+    or board[0][0] == value and board[1][1] == value and board[2][2] == value\
+    or board[2][0] == value and board[1][1] == value and board[0][2] == value:
+        return True
 
 def isValid(input):
     try:
@@ -108,16 +65,13 @@ def isValid(input):
     except ValueError:
         return False
 
-def outOfChoices(board):
+def checkChoices(board):
     choices = []
     for i in range(3):
         for j in range(3):
             if board[i][j] != 'O' and board[i][j] != 'X':
                 choices.append(board[i][j])
-    if not choices:
-        return True
-    else:
-        return False
+    return choices
 
 def main():
     gameIsGoing = True
@@ -125,15 +79,14 @@ def main():
     boardData = [[(3*i)-2, (3*i)-1, (3*i)] for i in range(1,4)]
 
     while gameIsGoing:
-        winCondition = checkWinCondition(boardData)
-        if winCondition == True:
+        if checkWinCondition(boardData) == True:
             print('Game is finished!')
             drawBoard(boardData)
             print(f"{winner} has won")
             break
         else:
             pass
-        if outOfChoices(boardData) == True:
+        if not checkChoices(boardData) == True:
             drawBoard(boardData)
             print("Game has ended. There is no winner")
             break
