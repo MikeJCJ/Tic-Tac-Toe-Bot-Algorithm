@@ -1,4 +1,4 @@
-# TicTacToe-Game
+# Tic-Tac-Toe Bot Algorithm
 
 This python script creates an interactive Tic Tac Toe game within the IDE with a computer opponent.
 
