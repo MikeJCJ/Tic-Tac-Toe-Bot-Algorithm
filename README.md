@@ -22,4 +22,4 @@ Future work:
 
         [ ] Cleanup the code with the use of classes in order for it to be more readable, and expandable.
         [ ] Create a Level 4 bot. The optimal bot should win or draw 100% of the time.
-        [ ] 
+        [ ] Allow the user to choose the level of bot to play.
