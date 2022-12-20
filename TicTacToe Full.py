@@ -1,4 +1,3 @@
-# This code checks if victory conditions are blocked for player O
 import time
 from random import randrange
 
