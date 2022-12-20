@@ -1,8 +1,6 @@
 # Tic-Tac-Toe Bot Algorithm
 
-This python script creates an interactive Tic Tac Toe game within the IDE, with a computer opponent that uses an algorithm to choose the best move.
-
-The bots success is determined by playing it against a bot which chooses randomly for 10,000 games.
+This python script creates an interactive Tic Tac Toe game within the IDE, with a computer opponent that uses an algorithm to choose the best move. The bots success is determined by playing it against a bot which chooses randomly for 10,000 games.
 
 The there are 3 levels of bot algorithm:
 
@@ -15,3 +13,7 @@ The there are 3 levels of bot algorithm:
                   *In the case of multiple "best choices", a choice is picked randomly.
                   
          *Level 3: In addition to the first step in Level 2, if there are multiple "best choices", the bot looks two steps ahead, and chooses the outcome which maximises the success criterion in two moves time. Results in a win rate of 86%.
+
+
+
+By running the script, you can select whether you would like to play the AI, or have them play eachother for 10,000 games, returning the wins from each AI.
