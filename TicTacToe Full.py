@@ -74,7 +74,7 @@ class bot: #Can use for opponent but also when predicting opponents best move
         elif self.difficulty == '3':
             choice = self.bot3(board, player)
         elif self.difficulty == '4':
-            choice = self.bot4(board, player)
+            choice = self.bot4(board)
         return choice
 
     def bot1(self,board):
@@ -170,8 +170,53 @@ class bot: #Can use for opponent but also when predicting opponents best move
 
         return choice
 
-    def bot4(self, board, player):
-        pass
+    def bot4(self, board):
+        variables = [[2.166132648135669, -142.22918456849848, 28.802324702809166, -34.3591840976318, -23.83157279835686, 14.39072082337364, -52.395208135884374, -6.7683684970540625, -59.237616265372765], [-68.13084219769237, -51.757688938580515, 55.719251120947156, 4.639918804106063, -44.93581383527906, 21.16244770943952, -49.71911427114905, 34.62180883384773, -35.494084501215255], [-50.713408338613455, -11.957205487145297, 6.067003448307169, -91.81632835536917, -56.11678840311578, 28.982863674019946, 49.96543915222467, -107.1169153011864, 26.148348825788872], [74.58076876370274, 92.53229977265394, 11.292808426653258, 1.036661862896155, -121.92123444614899, -61.03363641167156, 21.616291599624564, 187.71571835547334, 127.30531500830912]]
+        choices_num = board.checkChoices()
+        choices_let = []
+        board_tiles = {'a':1,'b':2,'c':3,'d':4,'e':5,'f':6,'g':7,'h':8,'i':9}
+        for key in board_tiles:
+            if board_tiles[key] in choices_num:
+                choices_let.append(key)
+
+        #Calculate the choice strength of each tile
+        choice_strength = {}
+        #print(variables)
+        m = 0
+        for tile in board_tiles:
+            metrics = [0 for i in range(9)]
+            for key, val in board_tiles.items():
+                if board.board[key] == 'X':
+                    #print("X is here")
+                    metrics[val-1] = variables[0][val-1] * 1 * variables[3][m]
+                if board.board[key] == 'O':
+                    metrics[val-1] = variables[1][val-1] * -1 * variables[3][m]
+                    #print("O is here")
+                else:
+                    metrics[val-1] = variables[2][val-1] * variables[3][m]
+            m+=1
+            #print(metrics)
+            strength = sum(metrics)
+            choice_strength[tile] = strength
+        for key in choice_strength:
+            if board.board[key] == 'X' or board.board[key] == 'O':
+                choice_strength[key] = None
+        #print("\n", choice_strength)
+
+        #Calculate the tile with the highest win chance and choose a tile
+        highest_win_chance = None
+        highest_tiles = []
+        for key, value in choice_strength.items():
+            if value == None:
+                continue
+            if highest_win_chance == None or value > highest_win_chance:
+                highest_win_chance = value
+                highest_tiles = [key]
+            elif value == highest_win_chance:
+                highest_tiles.append(key)
+        choice_let = highest_tiles[randrange(len(highest_tiles))]
+        choice_num = board_tiles[choice_let]
+        return choice_num
 
 def playerGo(board):
     choices = board.checkChoices()
