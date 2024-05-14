@@ -1,5 +1,7 @@
 # Tic-Tac-Toe Bot Algorithm
 
+Key Skills: Machine Learning | Game Simulation | Python
+
 This python script creates an interactive Tic Tac Toe game within the IDE, with a computer opponent that uses an algorithm (or machine learning) to choose the best move. The bots success is determined by playing it against a bot which chooses randomly for 10,000 games.
 
 The there are 4 levels of bot algorithm:
